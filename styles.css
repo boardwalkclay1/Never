@@ -1,0 +1,364 @@
+/* ============================================================
+   GLOBAL ROOT VARIABLES
+   ============================================================ */
+
+:root {
+  --bg: #050509;
+  --bg-elevated: #11111a;
+  --bg-card: #151521;
+  --accent: #ff2e92;
+  --accent-strong: #e50914;
+  --accent-soft: rgba(255, 46, 146, 0.2);
+  --text-main: #f5f5ff;
+  --text-muted: #9a9ab5;
+  --border-subtle: #26263a;
+  --danger: #ff3366;
+  --success: #4ade80;
+  --warning: #facc15;
+}
+
+/* ============================================================
+   RESET + BASE
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: radial-gradient(circle at top, #1a1a2e 0, #050509 55%);
+  color: var(--text-main);
+  font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+/* ============================================================
+   APP ROOT
+   ============================================================ */
+
+#app-root {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 16px 16px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   SCREEN LAYOUT
+   ============================================================ */
+
+.screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.screen-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ============================================================
+   TITLES
+   ============================================================ */
+
+.app-title {
+  font-family: "Space Grotesk", system-ui;
+  font-size: 26px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-shadow: 0 0 18px rgba(255, 46, 146, 0.9);
+}
+
+.app-subtitle {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+}
+
+.section-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+
+.card {
+  background: linear-gradient(135deg, #151521, #10101a);
+  border-radius: 18px;
+  border: 1px solid var(--border-subtle);
+  padding: 14px 16px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-main);
+}
+
+.card-pill {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  flex: 1;
+  border-radius: 999px;
+  border: none;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.12s ease;
+}
+
+.btn-primary {
+  background: radial-gradient(circle at top left, var(--accent) 0, var(--accent-strong) 40%, #7f1d1d 100%);
+  color: #fff;
+  box-shadow: 0 0 18px rgba(255, 46, 146, 0.7);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.99);
+  box-shadow: none;
+}
+
+/* ============================================================
+   INPUTS
+   ============================================================ */
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+}
+
+.input {
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  padding: 10px 14px;
+  background: rgba(5, 5, 9, 0.9);
+  color: var(--text-main);
+  font-size: 14px;
+  outline: none;
+}
+
+.input::placeholder {
+  color: rgba(154, 154, 181, 0.7);
+}
+
+/* ============================================================
+   CHIPS
+   ============================================================ */
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.chip.selected {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ============================================================
+   PROMPT CARD
+   ============================================================ */
+
+.prompt-card {
+  background: radial-gradient(circle at top, rgba(255, 46, 146, 0.18), #151521);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 46, 146, 0.4);
+  padding: 14px 16px;
+  box-shadow: 0 0 24px rgba(255, 46, 146, 0.4);
+}
+
+.prompt-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+}
+
+.prompt-text {
+  margin-top: 6px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* ============================================================
+   PLAYER GRID
+   ============================================================ */
+
+.players-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.player-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  border: 1px solid var(--border-subtle);
+  padding: 10px 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.player-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.player-emoji {
+  font-size: 22px;
+}
+
+.player-name {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.player-tagline {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.player-fingers {
+  margin-top: 4px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--warning);
+}
+
+/* ============================================================
+   REACTIONS
+   ============================================================ */
+
+.reaction-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.reaction-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* ============================================================
+   TOASTS
+   ============================================================ */
+
+#toast-container {
+  position: fixed;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  background: rgba(15, 15, 25, 0.96);
+  border-radius: 999px;
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-main);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+}
