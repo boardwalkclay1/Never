@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Never Have I Ever</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#e50914" />
+  <style>
+    :root {
+      --bg: #050509;
+      --bg-alt: #101018;
+      --red: #e50914;
+      --red-soft: #ff4b5c;
+      --accent: #ff2e92;
+      --accent2: #a855f7;
+      --text: #f5f5f5;
+      --muted: #9ca3af;
+      --card: #151521;
+      --border: #272738;
+      --radius: 14px;
+      --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.6);
+      --transition-fast: 0.15s ease-out;
+      --font-display: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display",
+        "Segoe UI", sans-serif;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top, #1a1a2e 0, #050509 55%);
+      color: var(--text);
+      font-family: var(--font-display);
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    #app {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    .screen {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--border);
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+        background var(--transition-fast), color var(--transition-fast);
+      font-family: inherit;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--red), var(--accent));
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(229, 9, 20, 0.5);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 10px 26px rgba(229, 9, 20, 0.7);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--red-soft);
+      color: var(--red-soft);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #05050b;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: 1px solid var(--accent);
+    }
+
+    .chip-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .chip.active {
+      border-color: var(--red-soft);
+      background: rgba(229, 9, 20, 0.15);
+      color: var(--text);
+    }
+
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .app-title {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .app-title-main {
+      font-size: 1.4rem;
+      text-transform: uppercase;
+    }
+
+    .app-title-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .header-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top, var(--accent), var(--red));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
+    }
+
+    .profile-avatar-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .profile-avatar-circle {
+      width: 56px;
+      height: 56px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top, var(--accent2), var(--red));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+
+    .profile-color-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .profile-color-swatch {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .profile-color-swatch.active {
+      border-color: #fff;
+    }
+
+    .home-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .home-footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .player-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .player-card {
+      background: #10101a;
+      border-radius: var(--radius);
+      padding: 10px;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    .player-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1f1f2b;
+      margin-bottom: 6px;
+    }
+
+    .player-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .player-tagline {
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .player-status {
+      font-size: 0.7rem;
+      margin-top: 4px;
+      color: var(--accent2);
+    }
+
+    .player-crown {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      font-size: 0.9rem;
+    }
+
+    .game-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+    }
+
+    .game-mode-chip {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+    }
+
+    .game-notify {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: #10101a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .game-notify-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--red);
+    }
+
+    .prompt-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .prompt-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .prompt-text {
+      font-size: 1.1rem;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .prompt-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .prompt-card::before {
+      content: "";
+      position: absolute;
+      top: -40%;
+      left: -20%;
+      width: 140%;
+      height: 40%;
+      background: linear-gradient(
+        135deg,
+        rgba(229, 9, 20, 0.18),
+        rgba(229, 9, 20, 0.02)
+      );
+      transform: rotate(-8deg);
+      pointer-events: none;
+    }
+
+    .finger-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .finger-player {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+    }
+
+    .finger-player-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .finger-icons {
+      display: flex;
+      gap: 2px;
+    }
+
+    .finger-icon {
+      font-size: 0.9rem;
+      opacity: 0.4;
+      position: relative;
+    }
+
+    .finger-icon.active {
+      opacity: 1;
+    }
+
+    .finger-strike {
+      position: absolute;
+      top: 50%;
+      left: -10%;
+      width: 140%;
+      height: 2px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(229, 9, 20, 0.9),
+        transparent
+      );
+      transform: translateY(-50%) rotate(-12deg);
+    }
+
+    .game-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .game-actions-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .reaction-bar {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 6px;
+    }
+
+    .reaction-btn {
+      background: transparent;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      font-size: 1rem;
+    }
+
+    .footer-note {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 420px;
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 16px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .row-space {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mt-4 { margin-top: 4px; }
+    .mt-8 { margin-top: 8px; }
+    .mt-12 { margin-top: 12px; }
+    .mt-16 { margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+    const APP_KEY = "never_have_i_ever_state_v1";
+    const SESSION_TTL_MS = 24 * 60 * 60 * 1000;
+    const appEl = document.getElementById("app");
+
+    let state = {
+      profile: null,
+      screen: "loading",
+      game: null,
+    };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(APP_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (parsed.game && parsed.game.createdAt) {
+          const age = Date.now() - parsed.game.createdAt;
+          if (age > SESSION_TTL_MS) parsed.game = null;
+        }
+        state = { ...state, ...parsed };
+      } catch (e) {
+        console.warn("Failed to load state", e);
+      }
+    }
+
+    function saveState() {
+      const toSave = {
+        profile: state.profile,
+        game: state.game,
+      };
+      localStorage.setItem(APP_KEY, JSON.stringify(toSave));
+    }
+
+    function id(prefix = "id") {
+      return prefix + "_" + Math.random().toString(36).slice(2, 8);
+    }
+
+    loadState();
+    if (!state.profile) state.screen = "profile";
+    else state.screen = "home";
+    render();
+
+    function render() {
+      switch (state.screen) {
+        case "profile": renderProfile(); break;
+        case "home": renderHome(); break;
+        case "create": renderCreateGame(); break;
+        case "lobby": renderLobby(); break;
+        case "game": renderGame(); break;
+        case "summary": renderSummary(); break;
+        default: renderHome();
+      }
+    }
+
+    function renderProfile() {
+      const profile = state.profile || {
+        name: "",
+        emoji: "😈",
+        color: "#e50914",
+        tagline: "",
+      };
+
+      appEl.innerHTML = `
+        <div class="screen">
+          <div class="card">
+            <div class="app-header">
+              <div class="app-title">
+                <div class="app-title-main">Never Have I Ever</div>
+                <div class="app-title-sub">Set your chaos identity</div>
+              </div>
+              <div class="header-icon">🔥</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Who are you tonight?</h2>
+            <p class="mt-4">This profile stays on this device and lasts for 24 hours.</p>
+
+            <div class="mt-12 profile-avatar-row">
+              <div class="profile-avatar-circle" id="profile-avatar-circle">
+                ${profile.emoji}
+              </div>
+              <div>
+                <label style="font-size:0.8rem;color:var(--muted);">Name</label>
+                <input id="profile-name" placeholder="Your name" value="${profile.name}" />
+              </div>
+            </div>
+
+            <div class="mt-12">
+              <label style="font-size:0.8rem;color:var(--muted);">Chaos emoji</label>
+              <input id="profile-emoji" maxlength="2" value="${profile.emoji}" />
+            </div>
+
+            <div class="mt-12">
+              <label style="font-size:0.8rem;color:var(--muted);">Title (optional)</label>
+              <input id="profile-tagline" placeholder="Chaos title, e.g. Silent Assassin" value="${profile.tagline}" />
+            </div>
+
+            <div class="mt-12">
+              <label style="font-size:0.8rem;color:var(--muted);">Avatar color</label>
+              <div class="profile-color-row mt-4">
+                ${["#e50914", "#ff2e92", "#a855f7", "#22c55e", "#f97316"]
+                  .map(
+                    (c) => `
+                    <div class="profile-color-swatch ${
+                      profile.color === c ? "active" : ""
+                    }" data-color="${c}" style="background:${c};"></div>
+                  `
+                  )
+                  .join("")}
+              </div>
+            </div>
+
+            <div class="mt-16">
+              <button class="btn-primary" id="profile-save">Save & Continue</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const nameInput = document.getElementById("profile-name");
+      const emojiInput = document.getElementById("profile-emoji");
+      const taglineInput = document.getElementById("profile-tagline");
+      const colorSwatches = document.querySelectorAll(".profile-color-swatch");
+      const avatarCircle = document.getElementById("profile-avatar-circle");
+      const saveBtn = document.getElementById("profile-save");
+
+      colorSwatches.forEach((sw) => {
+        sw.addEventListener("click", () => {
+          colorSwatches.forEach((s) => s.classList.remove("active"));
+          sw.classList.add("active");
+          profile.color = sw.dataset.color;
+        });
+      });
+
+      emojiInput.addEventListener("input", () => {
+        avatarCircle.textContent = emojiInput.value || "😈";
+      });
+
+      saveBtn.addEventListener("click", () => {
+        const name = nameInput.value.trim();
+        if (!name) {
+          alert("Give yourself a name first.");
+          return;
+        }
+        const emoji = emojiInput.value.trim() || "😈";
+        const tagline = taglineInput.value.trim();
+        const activeColor =
+          document.querySelector(".profile-color-swatch.active")?.dataset.color ||
+          "#e50914";
+
+        state.profile = {
+          id: state.profile?.id || id("player"),
+          name,
+          emoji,
+          tagline,
+          color: activeColor,
+        };
+        saveState();
+        state.screen = "home";
+        render();
+      });
+    }
+
+    function renderHome() {
+      appEl.innerHTML = `
+        <div class="screen">
+          <div class="card">
+            <div class="app-header">
+              <div class="app-title">
+                <div class="app-title-main">Never Have I Ever</div>
+                <div class="app-title-sub">Up to 10 players · Offline · 24 hours</div>
+              </div>
+              <div class="header-icon">💋</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Tonight's plan?</h2>
+            <p class="mt-4">Host a game and pass the phone, or keep it solo and expose yourself.</p>
+
+            <div class="home-actions mt-12">
+              <button class="btn-primary" id="btn-create">Start Game</button>
+            </div>
+
+            <div class="home-footer mt-16">
+              <button class="btn-ghost" id="btn-edit-profile">Edit Profile</button>
+              <button class="btn-ghost" id="btn-how">How to Play</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("btn-create").onclick = () => {
+        state.screen = "create";
+        render();
+      };
+      document.getElementById("btn-edit-profile").onclick = () => {
+        state.screen = "profile";
+        render();
+      };
+      document.getElementById("btn-how").onclick = () => {
+        alert(
+          "Never Have I Ever: someone drops a prompt, everyone who HAS done it loses a finger. Last one standing wins. Pass the phone around or let one person drive."
+        );
+      };
+    }
+
+    function renderCreateGame() {
+      const defaultMode = state.game?.mode || "5";
+      const defaultSpice = state.game?.spice || "spicy";
+
+      appEl.innerHTML = `
+        <div class="screen">
+          <div class="card">
+            <div class="app-header">
+              <div class="app-title">
+                <div class="app-title-main">Create Game</div>
+                <div class="app-title-sub">You’re the strike master tonight</div>
+              </div>
+              <div class="header-icon">👑</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Game settings</h2>
+
+            <div class="mt-12">
+              <label style="font-size:0.8rem;color:var(--muted);">Finger strikes</label>
+              <div class="chip-row mt-4" id="mode-row">
+                <div class="chip ${defaultMode === "5" ? "active" : ""}" data-mode="5">✋ 5 strikes</div>
+                <div class="chip ${defaultMode === "10" ? "active" : ""}" data-mode="10">🖐️🖐️ 10 strikes</div>
+              </div>
+            </div>
+
+            <div class="mt-12">
+              <label style="font-size:0.8rem;color:var(--muted);">Vibe</label>
+              <div class="chip-row mt-4" id="spice-row">
+                <div class="chip ${
+                  defaultSpice === "soft" ? "active" : ""
+                }" data-spice="soft">😇 Soft</div>
+                <div class="chip ${
+                  defaultSpice === "spicy" ? "active" : ""
+                }" data-spice="spicy">😈 Spicy</div>
+                <div class="chip ${
+                  defaultSpice === "unhinged" ? "active" : ""
+                }" data-spice="unhinged">💀 Unhinged</div>
+              </div>
+            </div>
+
+            <div class="mt-16">
+              <button class="btn-primary" id="btn-start-lobby">Start Game</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const modeRow = document.getElementById("mode-row");
+      const spiceRow = document.getElementById("spice-row");
+
+      modeRow.addEventListener("click", (e) => {
+        const chip = e.target.closest(".chip");
+        if (!chip) return;
+        modeRow.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+        chip.classList.add("active");
+      });
+
+      spiceRow.addEventListener("click", (e) => {
+        const chip = e.target.closest(".chip");
+        if (!chip) return;
+        spiceRow.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+        chip.classList.add("active");
+      });
+
+      document.getElementById("btn-start-lobby").onclick = () => {
+        const mode =
+          modeRow.querySelector(".chip.active")?.dataset.mode || defaultMode;
+        const spice =
+          spiceRow.querySelector(".chip.active")?.dataset.spice || defaultSpice;
+
+        state.game = {
+          id: state.game?.id || id("game"),
+          hostId: state.profile.id,
+          mode,
+          spice,
+          createdAt: Date.now(),
+          players: [
+            {
+              ...state.profile,
+              isHost: true,
+              fingersLeft: mode === "5" ? 5 : 10,
+            },
+          ],
+          prompts: [],
+          currentPromptIndex: -1,
+          log: [],
+          notifications: [],
+        };
+        saveState();
+        state.screen = "lobby";
+        render();
+      };
+    }
+
+    function renderLobby() {
+      const game = state.game;
+      if (!game) {
+        state.screen = "home";
+        render();
+        return;
+      }
+
+      appEl.innerHTML = `
+        <div class="screen">
+          <div class="card">
+            <div class="app-header">
+              <div class="app-title">
+                <div class="app-title-main">Never Have I Ever</div>
+                <div class="app-title-sub">${game.mode} strikes · ${
+        game.spice
+      } · expires in 24h</div>
+              </div>
+              <div class="header-icon">🧨</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Players</h2>
+            <p class="mt-4">Right now this is single-device. Add more players by editing the list below.</p>
+
+            <div class="player-grid mt-12" id="player-grid">
+              ${game.players
+                .map(
+                  (p, idx) => `
+                <div class="player-card">
+                  <div class="player-avatar" style="background:${p.color};">
+                    ${p.emoji}
+                  </div>
+                  <div class="player-name">${p.name}</div>
+                  <div class="player-tagline">${p.tagline || ""}</div>
+                  <div class="player-status">${
+                    p.isHost ? "Host" : "Player " + (idx + 1)
+                  }</div>
+                  ${p.isHost ? '<div class="player-crown">👑</div>' : ""}
+                </div>
+              `
+                )
+                .join("")}
+            </div>
+
+            <div class="mt-12">
+              <button class="btn-secondary" id="btn-add-player">Add Player (pass phone)</button>
+            </div>
+
+            <div class="mt-16">
+              <button class="btn-primary" id="btn-start-game">Start Game</button>
+            </div>
+
+            <div class="mt-8">
+              <button class="btn-ghost" id="btn-back-home">Back</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("btn-add-player").onclick = () => {
+        openAddPlayerModal();
+      };
+
+      document.getElementById("btn-start-game").onclick = () => {
+        state.game.currentPromptIndex = -1;
+        saveState();
+        state.screen = "game";
+        render();
+      };
+
+      document.getElementById("btn-back-home").onclick = () => {
+        state.screen = "home";
+        render();
+      };
+    }
+
+    function renderGame() {
+      const game = state.game;
+      if (!game) {
+        state.screen = "home";
+        render();
+        return;
+      }
+
+      const currentPrompt =
+        game.currentPromptIndex >= 0
+          ? game.prompts[game.currentPromptIndex]
+          : null;
+
+      appEl.innerHTML = `
+        <div class="screen">
+          <div class="card">
+            <div class="game-topbar">
+              <div>
+                <div style="font-size:0.8rem;color:var(--muted);">Never Have I Ever</div>
+                <div style="font-size:0.9rem;font-weight:600;">Round ${
+                  game.currentPromptIndex + 1 || 0
+                }</div>
+              </div>
+              <div class="row">
+                <div class="game-mode-chip">${game.mode} strikes · ${
+        game.spice
+      }</div>
+                <div class="game-notify" id="notify-btn">
+                  🔔
+                  ${
+                    (game.notifications || []).length
+                      ? '<div class="game-notify-dot"></div>'
+                      : ""
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card prompt-card">
+            <div class="prompt-label">Never have I ever…</div>
+            <div class="prompt-text">
+              ${
+                currentPrompt
+                  ? currentPrompt.text
+                  : "Waiting for a prompt. Add one and pass the phone around."
+              }
+            </div>
+            <div class="prompt-meta">
+              ${
+                currentPrompt
+                  ? `Submitted by ${currentPrompt.authorEmoji} ${currentPrompt.authorName}`
+                  : ""
+              }
+            </div>
+
+            <div class="finger-row mt-12">
+              ${game.players.map((p) => renderFingerRow(p, game.mode)).join("")}
+            </div>
+
+            <div class="reaction-bar mt-8">
+              ${["😭", "😂", "😈", "🤡", "💀", "💋"]
+                .map(
+                  (e) => `
+                <button class="reaction-btn" data-emoji="${e}">${e}</button>
+              `
+                )
+                .join("")}
+            </div>
+
+            <div class="game-actions mt-12">
+              <div class="game-actions-row">
+                <button class="btn-primary" id="btn-done">I’ve Done This 😅</button>
+                <button class="btn-secondary" id="btn-clean">I’m Clean 😇</button>
+              </div>
+              <div class="game-actions-row">
+                <button class="btn-secondary" id="btn-add-prompt">Add a Prompt ✍️</button>
+                <button class="btn-ghost" id="btn-next-prompt">Next Prompt ➜</button>
+              </div>
+            </div>
+
+            <div class="footer-note">
+              Pass the phone to whoever is answering. Fingers slash in red when they’ve done it.
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("btn-done").onclick = () => {
+        const game = state.game;
+        if (!game) return;
+        const name = prompt("Who just admitted it? Type their name exactly.");
+        if (!name) return;
+        const player = game.players.find(
+          (p) => p.name.toLowerCase() === name.toLowerCase()
+        );
+        if (!player) {
+          alert("No player with that name.");
+          return;
+        }
+        if (player.fingersLeft > 0) {
+          player.fingersLeft -= 1;
+          game.log.push({
+            type: "strike",
+            playerId: player.id,
+            promptIndex: game.currentPromptIndex,
+            at: Date.now(),
+          });
+          if (player.fingersLeft === 0) {
+            game.notifications.push({
+              text: `${player.name} is OUT.`,
+              emoji: "💀",
+              at: Date.now(),
+            });
+            alert(`${player.name} is OUT!`);
+          }
+          saveState();
+          render();
+        }
+      };
+
+      document.getElementById("btn-clean").onclick = () => {
+        alert("You’re claiming innocence. We’ll allow it… for now.");
+      };
+
+      document.getElementById("btn-add-prompt").onclick = () => {
+        openPromptModal();
+      };
+
+      document.getElementById("btn-next-prompt").onclick = () => {
+        const game = state.game;
+        if (!game.prompts.length) {
+          alert("No prompts yet. Add one first.");
+          return;
+        }
+        const nextIndex =
+          game.currentPromptIndex + 1 >= game.prompts.length
+            ? 0
+            : game.currentPromptIndex + 1;
+        game.currentPromptIndex = nextIndex;
+        saveState();
+        render();
+      };
+
+      document.querySelectorAll(".reaction-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const emoji = btn.dataset.emoji;
+          alert(`Reaction: ${emoji}`);
+        });
+      });
+
+      document.getElementById("notify-btn").onclick = () => {
+        const game = state.game;
+        if (!game.notifications || !game.notifications.length) {
+          alert("No new notifications.");
+          return;
+        }
+        alert(
+          game.notifications
+            .map((n) => `${n.emoji || "🔔"} ${n.text}`)
+            .join("\n")
+        );
+        game.notifications = [];
+        saveState();
+        render();
+      };
+    }
+
+    function renderFingerRow(player, mode) {
+      const total = mode === "5" ? 5 : 10;
+      const left = player.fingersLeft ?? total;
+      const icons = [];
+      for (let i = 0; i < total; i++) {
+        const active = i < left;
+        icons.push(`
+          <div class="finger-icon ${active ? "active" : ""}">
+            ✋
+            ${!active ? '<div class="finger-strike"></div>' : ""}
+          </div>
+        `);
+      }
+      return `
+        <div class="finger-player">
+          <div class="finger-player-left">
+            <div class="player-avatar" style="width:26px;height:26px;background:${player.color};">
+              ${player.emoji}
+            </div>
+            <span>${player.name}</span>
+          </div>
+          <div class="finger-icons">
+            ${icons.join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function openPromptModal() {
+      const modal = document.createElement("div");
+      modal.className = "modal-backdrop";
+      modal.innerHTML = `
+        <div class="modal">
+          <h3>Drop a Never Have I Ever</h3>
+          <p class="mt-4">Keep it soft, spicy, or unhinged. Your call.</p>
+          <div class="mt-8">
+            <textarea id="prompt-text" rows="3" placeholder="Never have I ever…"></textarea>
+          </div>
+          <div class="mt-8">
+            <label style="font-size:0.8rem;color:var(--muted);">Vibe tag</label>
+            <div class="chip-row mt-4" id="prompt-spice-row">
+              <div class="chip active" data-spice="soft">😇 Soft</div>
+              <div class="chip" data-spice="spicy">😈 Spicy</div>
+              <div class="chip" data-spice="unhinged">💀 Unhinged</div>
+            </div>
+          </div>
+          <div class="mt-12 row-space">
+            <button class="btn-ghost" id="prompt-cancel">Cancel</button>
+            <button class="btn-primary" id="prompt-save">Submit Prompt</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      const spiceRow = modal.querySelector("#prompt-spice-row");
+      spiceRow.addEventListener("click", (e) => {
+        const chip = e.target.closest(".chip");
+        if (!chip) return;
+        spiceRow.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+        chip.classList.add("active");
+      });
+
+      modal.querySelector("#prompt-cancel").onclick = () => {
+        modal.remove();
+      };
+
+      modal.querySelector("#prompt-save").onclick = () => {
+        const text = modal.querySelector("#prompt-text").value.trim();
+        if (!text) {
+          alert("Give us something to confess to.");
+          return;
+        }
+        const spice =
+          spiceRow.querySelector(".chip.active")?.dataset.spice || "soft";
+        const game = state.game;
+        if (!game) {
+          modal.remove();
+          return;
+        }
+        game.prompts.push({
+          id: id("prompt"),
+          text,
+          spice,
+          authorId: state.profile.id,
+          authorName: state.profile.name,
+          authorEmoji: state.profile.emoji,
+          at: Date.now(),
+        });
+        if (game.currentPromptIndex === -1) {
+          game.currentPromptIndex = 0;
+        }
+        game.notifications = game.notifications || [];
+        game.notifications.push({
+          text: `${state.profile.name} added a new prompt.`,
+          emoji: "✍️",
+          at: Date.now(),
+        });
+        saveState();
+        modal.remove();
+        render();
+      };
+    }
+
+    function openAddPlayerModal() {
+      const modal = document.createElement("div");
+      modal.className = "modal-backdrop";
+      modal.innerHTML = `
+        <div class="modal">
+          <h3>Add Player</h3>
+          <p class="mt-4">Pass the phone and let them set their name.</p>
+          <div class="mt-8">
+            <label style="font-size:0.8rem;color:var(--muted);">Name</label>
+            <input id="add-name" placeholder="Player name" />
+          </div>
+          <div class="mt-8">
+            <label style="font-size:0.8rem;color:var(--muted);">Emoji</label>
+            <input id="add-emoji" maxlength="2" value="😈" />
+          </div>
+          <div class="mt-8">
+            <label style="font-size:0.8rem;color:var(--muted);">Title (optional)</label>
+            <input id="add-tagline" placeholder="Chaos title" />
+          </div>
+          <div class="mt-12 row-space">
+            <button class="btn-ghost" id="add-cancel">Cancel</button>
+            <button class="btn-primary" id="add-save">Add</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      modal.querySelector("#add-cancel").onclick = () => modal.remove();
+      modal.querySelector("#add-save").onclick = () => {
+        const name = modal.querySelector("#add-name").value.trim();
+        const emoji = modal.querySelector("#add-emoji").value.trim() || "😈";
+        const tagline = modal.querySelector("#add-tagline").value.trim();
+        if (!name) {
+          alert("Name required.");
+          return;
+        }
+        const game = state.game;
+        if (!game) {
+          modal.remove();
+          return;
+        }
+        const mode = game.mode;
+        game.players.push({
+          id: id("player"),
+          name,
+          emoji,
+          tagline,
+          color: "#ff2e92",
+          isHost: false,
+          fingersLeft: mode === "5" ? 5 : 10,
+        });
+        saveState();
+        modal.remove();
+        renderLobby();
+      };
+    }
+
+    function renderSummary() {
+      const game = state.game;
+      if (!game) {
+        state.screen = "home";
+        render();
+        return;
+      }
+
+      appEl.innerHTML = `
+        <div class="screen">
+          <div class="card">
+            <h2>Game Over — Never Have I Ever</h2>
+            <p class="mt-4">24 hours of chaos. Here’s what went down.</p>
+          </div>
+
+          <div class="card">
+            <h3>Prompts</h3>
+            <div class="mt-8">
+              ${
+                game.prompts.length
+                  ? game.prompts
+                      .map(
+                        (p) => `
+                    <div class="mt-8">
+                      <div style="font-size:0.9rem;">${p.text}</div>
+                      <div style="font-size:0.75rem;color:var(--muted);">
+                        by ${p.authorEmoji} ${p.authorName} · ${p.spice}
+                      </div>
+                    </div>
+                  `
+                      )
+                      .join("")
+                  : "<p>No prompts recorded.</p>"
+              }
+            </div>
+          </div>
+
+          <div class="card">
+            <button class="btn-primary" id="btn-play-again">Play Again</button>
+            <button class="btn-ghost mt-8" id="btn-home">Back Home</button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("btn-play-again").onclick = () => {
+        state.game = null;
+        saveState();
+        state.screen = "create";
+        render();
+      };
+
+      document.getElementById("btn-home").onclick = () => {
+        state.screen = "home";
+        render();
+      };
+    }
+  </script>
+</body>
+</html>
