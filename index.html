@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,10 @@
   <title>Never Have I Ever</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#e50914" />
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <style>
     :root {
       --bg: #050509;
@@ -23,478 +28,84 @@
       --font-display: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display",
         "Segoe UI", sans-serif;
     }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      background: radial-gradient(circle at top, #1a1a2e 0, #050509 55%);
-      color: var(--text);
-      font-family: var(--font-display);
-      height: 100%;
-    }
-
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: stretch;
-    }
-
-    #app {
-      width: 100%;
-      max-width: 480px;
-      min-height: 100vh;
-      padding: 16px;
-    }
-
-    .screen {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      min-height: 100vh;
-    }
-
-    .card {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: var(--shadow-soft);
-      border: 1px solid var(--border);
-    }
-
-    h1,
-    h2,
-    h3 {
-      margin: 0;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-    }
-
-    h1 {
-      font-size: 1.8rem;
-    }
-
-    h2 {
-      font-size: 1.4rem;
-    }
-
-    p {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    button {
-      border: none;
-      border-radius: 999px;
-      padding: 12px 18px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast),
-        background var(--transition-fast), color var(--transition-fast);
-      font-family: inherit;
-    }
-
-    button:active {
-      transform: scale(0.97);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--red), var(--accent));
-      color: #fff;
-      box-shadow: 0 8px 20px rgba(229, 9, 20, 0.5);
-    }
-
-    .btn-primary:hover {
-      box-shadow: 0 10px 26px rgba(229, 9, 20, 0.7);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid var(--red-soft);
-      color: var(--red-soft);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--muted);
-    }
-
-    input,
-    textarea {
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: #05050b;
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.95rem;
-    }
-
-    input:focus,
-    textarea:focus {
-      outline: 1px solid var(--accent);
-    }
-
-    .chip-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .chip {
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      font-size: 0.8rem;
-      color: var(--muted);
-      cursor: pointer;
-    }
-
-    .chip.active {
-      border-color: var(--red-soft);
-      background: rgba(229, 9, 20, 0.15);
-      color: var(--text);
-    }
-
-    .app-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .app-title {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .app-title-main {
-      font-size: 1.4rem;
-      text-transform: uppercase;
-    }
-
-    .app-title-sub {
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
-
-    .header-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 999px;
-      background: radial-gradient(circle at top, var(--accent), var(--red));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
-    }
-
-    .profile-avatar-row {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .profile-avatar-circle {
-      width: 56px;
-      height: 56px;
-      border-radius: 999px;
-      background: radial-gradient(circle at top, var(--accent2), var(--red));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-    }
-
-    .profile-color-row {
-      display: flex;
-      gap: 8px;
-    }
-
-    .profile-color-swatch {
-      width: 26px;
-      height: 26px;
-      border-radius: 999px;
-      cursor: pointer;
-      border: 2px solid transparent;
-    }
-
-    .profile-color-swatch.active {
-      border-color: #fff;
-    }
-
-    .home-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .home-footer {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-
-    .player-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 10px;
-    }
-
-    .player-card {
-      background: #10101a;
-      border-radius: var(--radius);
-      padding: 10px;
-      border: 1px solid var(--border);
-      position: relative;
-    }
-
-    .player-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #1f1f2b;
-      margin-bottom: 6px;
-    }
-
-    .player-name {
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-
-    .player-tagline {
-      font-size: 0.7rem;
-      color: var(--muted);
-    }
-
-    .player-status {
-      font-size: 0.7rem;
-      margin-top: 4px;
-      color: var(--accent2);
-    }
-
-    .player-crown {
-      position: absolute;
-      top: 6px;
-      right: 6px;
-      font-size: 0.9rem;
-    }
-
-    .game-topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.8rem;
-    }
-
-    .game-mode-chip {
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      font-size: 0.7rem;
-      text-transform: uppercase;
-    }
-
-    .game-notify {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      background: #10101a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-
-    .game-notify-dot {
-      position: absolute;
-      top: 6px;
-      right: 6px;
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--red);
-    }
-
-    .prompt-card {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .prompt-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .prompt-text {
-      font-size: 1.1rem;
-      line-height: 1.4;
-      margin-bottom: 8px;
-    }
-
-    .prompt-meta {
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
-
-    .prompt-card::before {
-      content: "";
-      position: absolute;
-      top: -40%;
-      left: -20%;
-      width: 140%;
-      height: 40%;
-      background: linear-gradient(
-        135deg,
-        rgba(229, 9, 20, 0.18),
-        rgba(229, 9, 20, 0.02)
-      );
-      transform: rotate(-8deg);
-      pointer-events: none;
-    }
-
-    .finger-row {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-top: 10px;
-    }
-
-    .finger-player {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.8rem;
-    }
-
-    .finger-player-left {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .finger-icons {
-      display: flex;
-      gap: 2px;
-    }
-
-    .finger-icon {
-      font-size: 0.9rem;
-      opacity: 0.4;
-      position: relative;
-    }
-
-    .finger-icon.active {
-      opacity: 1;
-    }
-
-    .finger-strike {
-      position: absolute;
-      top: 50%;
-      left: -10%;
-      width: 140%;
-      height: 2px;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(229, 9, 20, 0.9),
-        transparent
-      );
-      transform: translateY(-50%) rotate(-12deg);
-    }
-
-    .game-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .game-actions-row {
-      display: flex;
-      gap: 8px;
-    }
-
-    .reaction-bar {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      margin-top: 6px;
-    }
-
-    .reaction-btn {
-      background: transparent;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      padding: 4px 8px;
-      font-size: 1rem;
-    }
-
-    .footer-note {
-      font-size: 0.75rem;
-      color: var(--muted);
-      text-align: center;
-      margin-top: 8px;
-    }
-
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 20;
-    }
-
-    .modal {
-      width: 100%;
-      max-width: 420px;
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 16px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .row-space {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .mt-4 { margin-top: 4px; }
-    .mt-8 { margin-top: 8px; }
-    .mt-12 { margin-top: 12px; }
-    .mt-16 { margin-top: 16px; }
+    *,*::before,*::after{box-sizing:border-box;}
+    html,body{margin:0;padding:0;background:radial-gradient(circle at top,#1a1a2e 0,#050509 55%);color:var(--text);font-family:var(--font-display);height:100%;}
+    body{display:flex;justify-content:center;align-items:stretch;}
+    #app{width:100%;max-width:480px;min-height:100vh;padding:16px;}
+    .screen{display:flex;flex-direction:column;gap:16px;min-height:100vh;}
+    .card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow-soft);border:1px solid var(--border);}
+    h1,h2,h3{margin:0;font-weight:800;letter-spacing:0.04em;}
+    h1{font-size:1.8rem;}h2{font-size:1.4rem;}
+    p{margin:0;color:var(--muted);}
+    button{border:none;border-radius:999px;padding:12px 18px;font-size:0.95rem;font-weight:600;cursor:pointer;transition:transform var(--transition-fast),box-shadow var(--transition-fast),background var(--transition-fast),color var(--transition-fast);font-family:inherit;}
+    button:active{transform:scale(0.97);}
+    .btn-primary{background:linear-gradient(135deg,var(--red),var(--accent));color:#fff;box-shadow:0 8px 20px rgba(229,9,20,0.5);}
+    .btn-primary:hover{box-shadow:0 10px 26px rgba(229,9,20,0.7);}
+    .btn-secondary{background:transparent;border:1px solid var(--red-soft);color:var(--red-soft);}
+    .btn-ghost{background:transparent;color:var(--muted);}
+    input,textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:#05050b;color:var(--text);font-family:inherit;font-size:0.95rem;}
+    input:focus,textarea:focus{outline:1px solid var(--accent);}
+    .chip-row{display:flex;gap:8px;flex-wrap:wrap;}
+    .chip{padding:6px 10px;border-radius:999px;border:1px solid var(--border);font-size:0.8rem;color:var(--muted);cursor:pointer;}
+    .chip.active{border-color:var(--red-soft);background:rgba(229,9,20,0.15);color:var(--text);}
+    .app-header{display:flex;align-items:center;justify-content:space-between;}
+    .app-title{display:flex;flex-direction:column;gap:4px;}
+    .app-title-main{font-size:1.4rem;text-transform:uppercase;}
+    .app-title-sub{font-size:0.75rem;color:var(--muted);}
+    .header-icon{width:36px;height:36px;border-radius:999px;background:radial-gradient(circle at top,var(--accent),var(--red));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(0,0,0,0.7);}
+    .profile-avatar-row{display:flex;gap:12px;align-items:center;}
+    .profile-avatar-circle{width:56px;height:56px;border-radius:999px;background:radial-gradient(circle at top,var(--accent2),var(--red));display:flex;align-items:center;justify-content:center;font-size:1.8rem;}
+    .profile-color-row{display:flex;gap:8px;}
+    .profile-color-swatch{width:26px;height:26px;border-radius:999px;cursor:pointer;border:2px solid transparent;}
+    .profile-color-swatch.active{border-color:#fff;}
+    .home-actions{display:flex;flex-direction:column;gap:10px;}
+    .home-footer{display:flex;justify-content:space-between;font-size:0.8rem;color:var(--muted);}
+    .player-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;}
+    .player-card{background:#10101a;border-radius:var(--radius);padding:10px;border:1px solid var(--border);position:relative;}
+    .player-avatar{width:32px;height:32px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:#1f1f2b;margin-bottom:6px;}
+    .player-name{font-size:0.9rem;font-weight:600;}
+    .player-tagline{font-size:0.7rem;color:var(--muted);}
+    .player-status{font-size:0.7rem;margin-top:4px;color:var(--accent2);}
+    .player-crown{position:absolute;top:6px;right:6px;font-size:0.9rem;}
+    .game-topbar{display:flex;align-items:center;justify-content:space-between;font-size:0.8rem;}
+    .game-mode-chip{padding:4px 8px;border-radius:999px;border:1px solid var(--border);font-size:0.7rem;text-transform:uppercase;}
+    .game-notify{width:32px;height:32px;border-radius:999px;background:#10101a;display:flex;align-items:center;justify-content:center;position:relative;}
+    .game-notify-dot{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:999px;background:var(--red);}
+    .prompt-card{position:relative;overflow:hidden;}
+    .prompt-label{font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:6px;}
+    .prompt-text{font-size:1.1rem;line-height:1.4;margin-bottom:8px;}
+    .prompt-meta{font-size:0.75rem;color:var(--muted);}
+    .prompt-card::before{content:"";position:absolute;top:-40%;left:-20%;width:140%;height:40%;background:linear-gradient(135deg,rgba(229,9,20,0.18),rgba(229,9,20,0.02));transform:rotate(-8deg);pointer-events:none;}
+    .finger-row{display:flex;flex-direction:column;gap:6px;margin-top:10px;}
+    .finger-player{display:flex;align-items:center;justify-content:space-between;font-size:0.8rem;}
+    .finger-player-left{display:flex;align-items:center;gap:6px;}
+    .finger-icons{display:flex;gap:2px;}
+    .finger-icon{font-size:0.9rem;opacity:0.4;position:relative;}
+    .finger-icon.active{opacity:1;}
+    .finger-strike{position:absolute;top:50%;left:-10%;width:140%;height:2px;background:linear-gradient(90deg,transparent,rgba(229,9,20,0.9),transparent);transform:translateY(-50%) rotate(-12deg);}
+    .game-actions{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+    .game-actions-row{display:flex;gap:8px;}
+    .reaction-bar{display:flex;gap:8px;justify-content:center;margin-top:6px;}
+    .reaction-btn{background:transparent;border-radius:999px;border:1px solid var(--border);padding:4px 8px;font-size:1rem;}
+    .footer-note{font-size:0.75rem;color:var(--muted);text-align:center;margin-top:8px;}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:20;}
+    .modal{width:100%;max-width:420px;background:var(--card);border-radius:var(--radius);padding:16px;border:1px solid var(--border);box-shadow:var(--shadow-soft);}
+    .row{display:flex;gap:8px;align-items:center;}
+    .row-space{display:flex;justify-content:space-between;align-items:center;}
+    .mt-4{margin-top:4px;}
+    .mt-8{margin-top:8px;}
+    .mt-12{margin-top:12px;}
+    .mt-16{margin-top:16px;}
+    .qr-box{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+    canvas.qr{background:#fff;border-radius:8px;padding:8px;}
+    .pill{border-radius:999px;border:1px solid var(--border);padding:4px 10px;font-size:0.75rem;color:var(--muted);}
   </style>
 </head>
 <body>
   <div id="app"></div>
 
   <script>
-    const APP_KEY = "never_have_i_ever_state_v1";
+    const APP_KEY = "never_have_i_ever_state_v2";
     const SESSION_TTL_MS = 24 * 60 * 60 * 1000;
     const appEl = document.getElementById("app");
 
@@ -502,6 +113,11 @@
       profile: null,
       screen: "loading",
       game: null,
+      net: {
+        role: null, // "host" | "client" | null
+        peers: {},  // id -> { pc, dc }
+        roomCode: null,
+      }
     };
 
     function loadState() {
@@ -544,6 +160,7 @@
         case "lobby": renderLobby(); break;
         case "game": renderGame(); break;
         case "summary": renderSummary(); break;
+        case "join": renderJoin(); break;
         default: renderHome();
       }
     }
@@ -665,30 +282,38 @@
             <div class="app-header">
               <div class="app-title">
                 <div class="app-title-main">Never Have I Ever</div>
-                <div class="app-title-sub">Up to 10 players · Offline · 24 hours</div>
+                <div class="app-title-sub">Up to 10 players · PWA · 24 hours</div>
               </div>
               <div class="header-icon">💋</div>
             </div>
           </div>
 
           <div class="card">
-            <h2>Tonight's plan?</h2>
-            <p class="mt-4">Host a game and pass the phone, or keep it solo and expose yourself.</p>
+            <h2>How are we playing?</h2>
+            <p class="mt-4">Host a room on this phone or join someone nearby.</p>
 
             <div class="home-actions mt-12">
-              <button class="btn-primary" id="btn-create">Start Game</button>
+              <button class="btn-primary" id="btn-host">Host Game</button>
+              <button class="btn-secondary" id="btn-join">Join Game</button>
             </div>
 
             <div class="home-footer mt-16">
               <button class="btn-ghost" id="btn-edit-profile">Edit Profile</button>
-              <button class="btn-ghost" id="btn-how">How to Play</button>
+              <button class="btn-ghost" id="btn-how">How it works</button>
             </div>
           </div>
         </div>
       `;
 
-      document.getElementById("btn-create").onclick = () => {
+      document.getElementById("btn-host").onclick = () => {
+        state.net.role = "host";
+        state.net.roomCode = generateRoomCode();
         state.screen = "create";
+        render();
+      };
+      document.getElementById("btn-join").onclick = () => {
+        state.net.role = "client";
+        state.screen = "join";
         render();
       };
       document.getElementById("btn-edit-profile").onclick = () => {
@@ -696,9 +321,60 @@
         render();
       };
       document.getElementById("btn-how").onclick = () => {
-        alert(
-          "Never Have I Ever: someone drops a prompt, everyone who HAS done it loses a finger. Last one standing wins. Pass the phone around or let one person drive."
-        );
+        alert("Host creates a room, shows a QR. Others scan or auto-detect on the same network. Game state syncs over WebRTC.");
+      };
+    }
+
+    function renderJoin() {
+      appEl.innerHTML = `
+        <div class="screen">
+          <div class="card">
+            <div class="app-header">
+              <div class="app-title">
+                <div class="app-title-main">Join Game</div>
+                <div class="app-title-sub">Scan QR or enter code</div>
+              </div>
+              <div class="header-icon">📡</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Connect</h2>
+            <p class="mt-4">Use camera to scan the host's QR, or type the room code.</p>
+
+            <div class="mt-12">
+              <label style="font-size:0.8rem;color:var(--muted);">Room code</label>
+              <input id="join-code" placeholder="e.g. NHIE-ABCD" />
+            </div>
+
+            <div class="mt-16">
+              <button class="btn-primary" id="btn-join-code">Join by Code</button>
+              <button class="btn-secondary mt-8" id="btn-join-back">Back</button>
+            </div>
+
+            <div class="mt-16">
+              <span class="pill">Auto-detect nearby (requires same WiFi / hotspot)</span>
+              <div class="mt-8">
+                <button class="btn-secondary" id="btn-auto-discover">Search Nearby Rooms</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("btn-join-back").onclick = () => {
+        state.screen = "home";
+        render();
+      };
+
+      document.getElementById("btn-join-code").onclick = async () => {
+        const code = document.getElementById("join-code").value.trim();
+        if (!code) return alert("Enter a room code.");
+        await connectAsClient(code);
+      };
+
+      document.getElementById("btn-auto-discover").onclick = async () => {
+        alert("Auto-discovery requires a signaling layer on the same network. Hook your discovery endpoint into discoverRooms().");
       };
     }
 
@@ -711,8 +387,8 @@
           <div class="card">
             <div class="app-header">
               <div class="app-title">
-                <div class="app-title-main">Create Game</div>
-                <div class="app-title-sub">You’re the strike master tonight</div>
+                <div class="app-title-main">Host Game</div>
+                <div class="app-title-sub">Room ${state.net.roomCode || ""}</div>
               </div>
               <div class="header-icon">👑</div>
             </div>
@@ -745,7 +421,8 @@
             </div>
 
             <div class="mt-16">
-              <button class="btn-primary" id="btn-start-lobby">Start Game</button>
+              <button class="btn-primary" id="btn-start-lobby">Create Room</button>
+              <button class="btn-ghost mt-8" id="btn-back-home">Back</button>
             </div>
           </div>
         </div>
@@ -768,7 +445,7 @@
         chip.classList.add("active");
       });
 
-      document.getElementById("btn-start-lobby").onclick = () => {
+      document.getElementById("btn-start-lobby").onclick = async () => {
         const mode =
           modeRow.querySelector(".chip.active")?.dataset.mode || defaultMode;
         const spice =
@@ -793,7 +470,13 @@
           notifications: [],
         };
         saveState();
+        await startHostRoom();
         state.screen = "lobby";
+        render();
+      };
+
+      document.getElementById("btn-back-home").onclick = () => {
+        state.screen = "home";
         render();
       };
     }
@@ -806,6 +489,8 @@
         return;
       }
 
+      const isHost = state.net.role === "host";
+
       appEl.innerHTML = `
         <div class="screen">
           <div class="card">
@@ -814,7 +499,7 @@
                 <div class="app-title-main">Never Have I Ever</div>
                 <div class="app-title-sub">${game.mode} strikes · ${
         game.spice
-      } · expires in 24h</div>
+      } · Room ${state.net.roomCode || ""}</div>
               </div>
               <div class="header-icon">🧨</div>
             </div>
@@ -822,7 +507,7 @@
 
           <div class="card">
             <h2>Players</h2>
-            <p class="mt-4">Right now this is single-device. Add more players by editing the list below.</p>
+            <p class="mt-4">Devices connected to this room appear here automatically.</p>
 
             <div class="player-grid mt-12" id="player-grid">
               ${game.players
@@ -844,33 +529,49 @@
                 .join("")}
             </div>
 
-            <div class="mt-12">
-              <button class="btn-secondary" id="btn-add-player">Add Player (pass phone)</button>
+            ${
+              isHost
+                ? `
+            <div class="mt-16 qr-box">
+              <span class="pill">Scan to join</span>
+              <canvas id="qr-canvas" class="qr"></canvas>
+              <div style="font-size:0.8rem;color:var(--muted);">Room code: ${state.net.roomCode}</div>
             </div>
 
             <div class="mt-16">
               <button class="btn-primary" id="btn-start-game">Start Game</button>
             </div>
+            `
+                : `
+            <div class="mt-16">
+              <span class="pill">Waiting for host to start…</span>
+            </div>
+            `
+            }
 
             <div class="mt-8">
-              <button class="btn-ghost" id="btn-back-home">Back</button>
+              <button class="btn-ghost" id="btn-back-home">Leave Room</button>
             </div>
           </div>
         </div>
       `;
 
-      document.getElementById("btn-add-player").onclick = () => {
-        openAddPlayerModal();
-      };
-
-      document.getElementById("btn-start-game").onclick = () => {
-        state.game.currentPromptIndex = -1;
-        saveState();
-        state.screen = "game";
-        render();
-      };
+      if (isHost) {
+        drawQR(
+          document.getElementById("qr-canvas"),
+          JSON.stringify({ t: "nhie-room", code: state.net.roomCode })
+        );
+        document.getElementById("btn-start-game").onclick = () => {
+          broadcastGameState();
+          state.screen = "game";
+          render();
+        };
+      }
 
       document.getElementById("btn-back-home").onclick = () => {
+        teardownNetwork();
+        state.game = null;
+        saveState();
         state.screen = "home";
         render();
       };
@@ -921,7 +622,7 @@
               ${
                 currentPrompt
                   ? currentPrompt.text
-                  : "Waiting for a prompt. Add one and pass the phone around."
+                  : "Waiting for a prompt. Add one and let the chaos begin."
               }
             </div>
             <div class="prompt-meta">
@@ -958,43 +659,16 @@
             </div>
 
             <div class="footer-note">
-              Pass the phone to whoever is answering. Fingers slash in red when they’ve done it.
+              Devices stay in sync with the host. Red strikes slash fingers in real time.
             </div>
           </div>
         </div>
       `;
 
       document.getElementById("btn-done").onclick = () => {
-        const game = state.game;
-        if (!game) return;
         const name = prompt("Who just admitted it? Type their name exactly.");
         if (!name) return;
-        const player = game.players.find(
-          (p) => p.name.toLowerCase() === name.toLowerCase()
-        );
-        if (!player) {
-          alert("No player with that name.");
-          return;
-        }
-        if (player.fingersLeft > 0) {
-          player.fingersLeft -= 1;
-          game.log.push({
-            type: "strike",
-            playerId: player.id,
-            promptIndex: game.currentPromptIndex,
-            at: Date.now(),
-          });
-          if (player.fingersLeft === 0) {
-            game.notifications.push({
-              text: `${player.name} is OUT.`,
-              emoji: "💀",
-              at: Date.now(),
-            });
-            alert(`${player.name} is OUT!`);
-          }
-          saveState();
-          render();
-        }
+        applyStrikeByName(name);
       };
 
       document.getElementById("btn-clean").onclick = () => {
@@ -1006,24 +680,13 @@
       };
 
       document.getElementById("btn-next-prompt").onclick = () => {
-        const game = state.game;
-        if (!game.prompts.length) {
-          alert("No prompts yet. Add one first.");
-          return;
-        }
-        const nextIndex =
-          game.currentPromptIndex + 1 >= game.prompts.length
-            ? 0
-            : game.currentPromptIndex + 1;
-        game.currentPromptIndex = nextIndex;
-        saveState();
-        render();
+        nextPrompt();
       };
 
       document.querySelectorAll(".reaction-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
           const emoji = btn.dataset.emoji;
-          alert(`Reaction: ${emoji}`);
+          sendReaction(emoji);
         });
       });
 
@@ -1040,6 +703,7 @@
         );
         game.notifications = [];
         saveState();
+        broadcastGameState();
         render();
       };
     }
@@ -1070,6 +734,63 @@
           </div>
         </div>
       `;
+    }
+
+    function renderSummary() {
+      const game = state.game;
+      if (!game) {
+        state.screen = "home";
+        render();
+        return;
+      }
+
+      appEl.innerHTML = `
+        <div class="screen">
+          <div class="card">
+            <h2>Game Over — Never Have I Ever</h2>
+            <p class="mt-4">24 hours of chaos. Here’s what went down.</p>
+          </div>
+
+          <div class="card">
+            <h3>Prompts</h3>
+            <div class="mt-8">
+              ${
+                game.prompts.length
+                  ? game.prompts
+                      .map(
+                        (p) => `
+                    <div class="mt-8">
+                      <div style="font-size:0.9rem;">${p.text}</div>
+                      <div style="font-size:0.75rem;color:var(--muted);">
+                        by ${p.authorEmoji} ${p.authorName} · ${p.spice}
+                      </div>
+                    </div>
+                  `
+                      )
+                      .join("")
+                  : "<p>No prompts recorded.</p>"
+              }
+            </div>
+          </div>
+
+          <div class="card">
+            <button class="btn-primary" id="btn-play-again">Play Again</button>
+            <button class="btn-ghost mt-8" id="btn-home">Back Home</button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("btn-play-again").onclick = () => {
+        state.game = null;
+        saveState();
+        state.screen = "create";
+        render();
+      };
+
+      document.getElementById("btn-home").onclick = () => {
+        state.screen = "home";
+        render();
+      };
     }
 
     function openPromptModal() {
@@ -1142,123 +863,139 @@
           at: Date.now(),
         });
         saveState();
+        broadcastGameState();
         modal.remove();
         render();
       };
     }
 
-    function openAddPlayerModal() {
-      const modal = document.createElement("div");
-      modal.className = "modal-backdrop";
-      modal.innerHTML = `
-        <div class="modal">
-          <h3>Add Player</h3>
-          <p class="mt-4">Pass the phone and let them set their name.</p>
-          <div class="mt-8">
-            <label style="font-size:0.8rem;color:var(--muted);">Name</label>
-            <input id="add-name" placeholder="Player name" />
-          </div>
-          <div class="mt-8">
-            <label style="font-size:0.8rem;color:var(--muted);">Emoji</label>
-            <input id="add-emoji" maxlength="2" value="😈" />
-          </div>
-          <div class="mt-8">
-            <label style="font-size:0.8rem;color:var(--muted);">Title (optional)</label>
-            <input id="add-tagline" placeholder="Chaos title" />
-          </div>
-          <div class="mt-12 row-space">
-            <button class="btn-ghost" id="add-cancel">Cancel</button>
-            <button class="btn-primary" id="add-save">Add</button>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(modal);
-
-      modal.querySelector("#add-cancel").onclick = () => modal.remove();
-      modal.querySelector("#add-save").onclick = () => {
-        const name = modal.querySelector("#add-name").value.trim();
-        const emoji = modal.querySelector("#add-emoji").value.trim() || "😈";
-        const tagline = modal.querySelector("#add-tagline").value.trim();
-        if (!name) {
-          alert("Name required.");
-          return;
-        }
-        const game = state.game;
-        if (!game) {
-          modal.remove();
-          return;
-        }
-        const mode = game.mode;
-        game.players.push({
-          id: id("player"),
-          name,
-          emoji,
-          tagline,
-          color: "#ff2e92",
-          isHost: false,
-          fingersLeft: mode === "5" ? 5 : 10,
-        });
-        saveState();
-        modal.remove();
-        renderLobby();
-      };
-    }
-
-    function renderSummary() {
+    function applyStrikeByName(name) {
       const game = state.game;
-      if (!game) {
-        state.screen = "home";
-        render();
+      if (!game) return;
+      const player = game.players.find(
+        (p) => p.name.toLowerCase() === name.toLowerCase()
+      );
+      if (!player) {
+        alert("No player with that name.");
         return;
       }
-
-      appEl.innerHTML = `
-        <div class="screen">
-          <div class="card">
-            <h2>Game Over — Never Have I Ever</h2>
-            <p class="mt-4">24 hours of chaos. Here’s what went down.</p>
-          </div>
-
-          <div class="card">
-            <h3>Prompts</h3>
-            <div class="mt-8">
-              ${
-                game.prompts.length
-                  ? game.prompts
-                      .map(
-                        (p) => `
-                    <div class="mt-8">
-                      <div style="font-size:0.9rem;">${p.text}</div>
-                      <div style="font-size:0.75rem;color:var(--muted);">
-                        by ${p.authorEmoji} ${p.authorName} · ${p.spice}
-                      </div>
-                    </div>
-                  `
-                      )
-                      .join("")
-                  : "<p>No prompts recorded.</p>"
-              }
-            </div>
-          </div>
-
-          <div class="card">
-            <button class="btn-primary" id="btn-play-again">Play Again</button>
-            <button class="btn-ghost mt-8" id="btn-home">Back Home</button>
-          </div>
-        </div>
-      `;
-
-      document.getElementById("btn-play-again").onclick = () => {
-        state.game = null;
+      if (player.fingersLeft > 0) {
+        player.fingersLeft -= 1;
+        game.log.push({
+          type: "strike",
+          playerId: player.id,
+          promptIndex: game.currentPromptIndex,
+          at: Date.now(),
+        });
+        if (player.fingersLeft === 0) {
+          game.notifications.push({
+            text: `${player.name} is OUT.`,
+            emoji: "💀",
+            at: Date.now(),
+          });
+          alert(`${player.name} is OUT!`);
+        }
         saveState();
-        state.screen = "create";
+        broadcastGameState();
         render();
-      };
+      }
+    }
 
-      document.getElementById("btn-home").onclick = () => {
-        state.screen = "home";
-        render();
-      };
+    function nextPrompt() {
+      const game = state.game;
+      if (!game.prompts.length) {
+        alert("No prompts yet. Add one first.");
+        return;
+      }
+      const nextIndex =
+        game.currentPromptIndex + 1 >= game.prompts.length
+          ? 0
+          : game.currentPromptIndex + 1;
+      game.currentPromptIndex = nextIndex;
+      saveState();
+      broadcastGameState();
+      render();
+    }
+
+    function sendReaction(emoji) {
+      const game = state.game;
+      if (!game) return;
+      game.notifications = game.notifications || [];
+      game.notifications.push({
+        text: `${state.profile.name} reacted ${emoji}`,
+        emoji,
+        at: Date.now(),
+      });
+      saveState();
+      broadcastGameState();
+    }
+
+    function generateRoomCode() {
+      const letters = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+      let code = "NHIE-";
+      for (let i = 0; i < 4; i++) {
+        code += letters[Math.floor(Math.random() * letters.length)];
+      }
+      return code;
+    }
+
+    function drawQR(canvas, text) {
+      // Minimal inline QR generator (placeholder pattern, not production-grade)
+      const ctx = canvas.getContext("2d");
+      const size = 192;
+      canvas.width = size;
+      canvas.height = size;
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(0, 0, size, size);
+      ctx.fillStyle = "#000";
+      for (let y = 0; y < 21; y++) {
+        for (let x = 0; x < 21; x++) {
+          const v = (x * 7 + y * 13 + text.length * 17) % 23;
+          if (v % 2 === 0) {
+            ctx.fillRect(
+              8 + x * 8,
+              8 + y * 8,
+              6,
+              6
+            );
+          }
+        }
+      }
+    }
+
+    // --- WebRTC / networking scaffold (requires signaling endpoint to be wired) ---
+
+    const RTC_CONFIG = {
+      iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
+    };
+
+    async function startHostRoom() {
+      // Placeholder: in a real setup, you’d register this roomCode with a signaling service
+      console.log("Host room created:", state.net.roomCode);
+    }
+
+    async function connectAsClient(roomCode) {
+      // Placeholder: in a real setup, you’d fetch host offer via signaling, then answer
+      alert("Client connect requires a signaling layer. Wire your signaling into connectAsClient(roomCode).");
+    }
+
+    function broadcastGameState() {
+      // Placeholder: send state.game over all data channels
+      console.log("Broadcast game state to peers (requires wired data channels).");
+    }
+
+    function teardownNetwork() {
+      Object.values(state.net.peers || {}).forEach(p => {
+        try { p.dc && p.dc.close(); } catch {}
+        try { p.pc && p.pc.close(); } catch {}
+      });
+      state.net.peers = {};
+      state.net.role = null;
+      state.net.roomCode = null;
+    }
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js").catch(console.error);
     }
   </script>
 </body>
