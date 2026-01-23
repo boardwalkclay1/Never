@@ -5,7 +5,11 @@
   <title>NEVER HAVE I EVER // OFFLINE CREW EDITION</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Fonts -->
+  <!-- Meta -->
+  <meta name="description" content="Never Have I Ever // Offline Crew Edition — a cinematic, crew-first party game experience." />
+  <meta name="theme-color" content="#050509" />
+
+  <!-- Fonts (can be swapped to self-hosted later for full sovereignty) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -13,16 +17,37 @@
     rel="stylesheet"
   />
 
-  <link rel="stylesheet" href="styles.css" />
+  <!-- Core styles -->
+  <link rel="stylesheet" href="/styles.css" />
+
+  <!-- Basic favicon hooks (you can drop actual icons into /public later) -->
+  <link rel="icon" href="/favicon.ico" />
 </head>
-<body>
-  <div id="app-root">
-    <!-- Everything is rendered by app.js -->
+<body class="nhie-body">
+  <noscript>
+    <div class="nhie-noscript">
+      NEVER HAVE I EVER needs JavaScript turned on to run this crew session.
+    </div>
+  </noscript>
+
+  <!-- App Shell -->
+  <div id="app-root" class="nhie-app-root">
+    <!-- Initial cinematic loader before app.js takes over -->
+    <div class="nhie-loader">
+      <div class="nhie-loader-mark">NEVER HAVE I EVER</div>
+      <div class="nhie-loader-sub">OFFLINE CREW EDITION</div>
+      <div class="nhie-loader-pulse"></div>
+    </div>
   </div>
 
-  <div id="toast-container"></div>
+  <!-- Toasts / system messages -->
+  <div id="toast-container" class="nhie-toast-container"></div>
 
-  <script src="ble.js"></script>
-  <script src="app.js"></script>
+  <!-- Scripts
+       - ble.js: optional mesh / proximity layer (kept client-side only)
+       - app.js: single-page flow, calls Vercel serverless routes under /api
+  -->
+  <script src="/ble.js" defer></script>
+  <script src="/app.js" defer></script>
 </body>
 </html>
