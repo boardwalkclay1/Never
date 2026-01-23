@@ -1,11 +1,11 @@
 // app.js
 // NEVER HAVE I EVER // OFFLINE CREW EDITION
-// Frontend is 100% client-side. All sync happens via Vercel serverless routes under /api/game/*
+// Vercel-native frontend: talks to /api/game/* serverless routes
 
 const state = {
   role: null,          // "host" | "client" | null
   game: null,          // full game object from server
-  playerId: null,      // id of this player (for strikes, etc.)
+  playerId: null,      // id of this player
   loading: false,
   error: null,
   pollIntervalId: null // for live state polling
@@ -48,9 +48,8 @@ function startPolling(gameId) {
     try {
       const data = await api(`/state?gameId=${encodeURIComponent(gameId)}`);
       state.game = data.game;
-      render(false); // don't show loading flicker on poll
+      render(false); // no loader flicker on poll
     } catch (err) {
-      // silent fail on poll; host might have ended game
       console.warn("Polling error:", err.message);
     }
   }, 2000);
@@ -69,7 +68,7 @@ function render(showLoader = true) {
   const root = document.getElementById("app-root");
   if (!root) return;
 
-  // If first paint, remove loader shell if present
+  // Remove initial loader shell if present
   const loader = root.querySelector(".nhie-loader");
   if (loader) loader.remove();
 
@@ -114,7 +113,7 @@ function renderLanding(root) {
       </div>
 
       <div class="nhie-hero-footnote">
-        One phone can host. Everyone else joins with a simple code.
+        One phone hosts. Everyone else joins with a simple code.
       </div>
 
       ${state.error ? `<div class="nhie-error">${state.error}</div>` : ""}
@@ -128,7 +127,6 @@ function renderLanding(root) {
 async function startHostFlow() {
   setLoading(true);
   try {
-    // Default mode + spice for now; can be a pre-screen later
     const payload = { mode: "5", spice: "spicy" };
     const data = await api("/create", {
       method: "POST",
@@ -405,7 +403,7 @@ async function onJoinGame() {
   }
 
   setLoading(true);
-  try:
+  try {
     const payload = { code, name, emoji };
     const data = await api("/join", {
       method: "POST",
